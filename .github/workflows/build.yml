@@ -31,5 +31,26 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     
+    # Build
     - name: Build with Gradle
       run: ./gradlew clean build
+      
+    - name: Make Directory for deliver
+      run: mkdir deploy
+    
+    - name: Copy Jar
+      run: cp ./build/libs/*.jar ./deploy
+    
+    - name: Make zip file
+      run: zip -r -qq -j ./spring-test-build.zip ./deploy
+    
+    - name: Deliver to AWS S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY_ID}}
+      run: |
+          aws s3 cp \
+          --region ap-northeast-2 \
+          --acl private \
+          ./spring-test-build.zip s3://sinclairr-spring-test-build/
+        
