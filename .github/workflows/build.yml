@@ -65,6 +65,6 @@ jobs:
         aws deploy create-deployment \
         --application-name spring-test \
         --deployment-group-name spring-test-deploy-group \
-        --file-exists-behavior OVERWRITE
+        --file-exists-behavior OVERWRITE \
         --s3-location bucket=spring-test-build-sinclairr,bundleType=zip,key=spring-test-build.zip \
         --region ap-northeast-1
