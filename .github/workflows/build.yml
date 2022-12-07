@@ -40,6 +40,9 @@ jobs:
     
     - name: Copy Jar
       run: cp ./build/libs/*.jar ./deploy
+
+    - name: Copy appspec
+      run: cp appspec.yml ./deploy
     
     - name: Make zip file
       run: zip -r -qq -j ./spring-test-build.zip ./deploy
@@ -54,3 +57,14 @@ jobs:
           --acl private \
           ./spring-test-build.zip s3://spring-test-build-sinclairr/
         
+    - name: Deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+      run: |
+        aws deploy create-deployment \
+        --application-name spring-test \
+        --deployment-group-name spring-test-deploy-group \
+        --file-exists-behavior OVERWRITE
+        --s3-location bucket=spring-test-build-sinclairr,bundleType=zip,key=spring-test-build.zip \
+        --region ap-northeast-1
