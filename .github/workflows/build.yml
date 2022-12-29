@@ -5,7 +5,7 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: spring-test gradle CI CD
+name: CI / CD for clone-spirngboot-aws
 
 on:
   push:
@@ -48,7 +48,7 @@ jobs:
       run: cp ./scripts/* ./deploy
     
     - name: Make zip file
-      run: zip -r -qq -j ./spring-test-build.zip ./deploy
+      run: zip -r -qq -j ./clone-spirngboot-aws-build.zip ./deploy
     
     - name: Deliver to AWS S3
       env:
@@ -58,7 +58,7 @@ jobs:
           aws s3 cp \
           --region ap-northeast-1 \
           --acl private \
-          ./spring-test-build.zip s3://spring-test-build-sinclairr/
+          ./clone-spirngboot-aws-build.zip s3://spring-test-build-sinclairr/
         
     - name: Deploy
       env:
@@ -69,5 +69,5 @@ jobs:
         --application-name spring-test-deploy \
         --deployment-group-name spring-test-deploy-group \
         --file-exists-behavior OVERWRITE \
-        --s3-location bucket=spring-test-build-sinclairr,bundleType=zip,key=spring-test-build.zip \
+        --s3-location bucket=spring-test-build-sinclairr,bundleType=zip,key=clone-spirngboot-aws-build.zip \
         --region ap-northeast-1

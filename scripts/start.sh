@@ -5,7 +5,7 @@ ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh
 
 REPOSITORY=/home/ec2-user/app/step3
-PROJECT_NAME=spring-test
+PROJECT_NAME=clone-spirngboot-aws
 
 echo "> 프로젝트 Build 시작"
 echo "> cp $REPOSITORY/deploy/*.jar $REPOSITORY/"
