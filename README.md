@@ -1,4 +1,4 @@
-# clone-springboot-aws
+# clone-spring-aws
 
 - 공부 내용: 스프링부트, AWS를 활용한 웹 서비스 실습
 - 공부 기술: Spring boot, AWS
